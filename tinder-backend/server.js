@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import Cards from "./dbCards.js";
+import Cors from 'cors';
 
 // App Config
 const app = express();
@@ -9,13 +10,20 @@ const connection_url = `mongodb+srv://admin:Tb1ba9AeHomQ58cM@cluster0.n6z3w.mong
 
 // Middlewares
 app.use(express.json());
+app.use(Cors());
 
 // DB Config
-mongoose.connect(connection_url, {
-   useNewUrlParser: true,
-   useCreateIndex: true,
-   useUnifiedTopology: true,
-});
+// mongoose.connect(connection_url, {
+//    useNewUrlParser: true,
+//    useCreateIndex: true,
+//    useUnifiedTopology: true,
+// });
+
+mongoose.connect(connection_url, 
+    err => {
+        if(err) throw err;
+        console.log('connected to MongoDB');
+    });
 
 // API Endpoints
 app.get('/', (req, res) => res.status(200).send("Hello Shru!!!"));
